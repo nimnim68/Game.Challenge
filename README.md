@@ -1,8 +1,12 @@
 # Game.Challenge
 Test for Game Server Engineer
+
 gamigo group
+
 Implement a User Profile API
+
 The Brief
+
 Our product owner has just brought us a project to create a new profile page for the players
 of our games. Your responsibility is to design and implement a new microservice with a
 RESTful API to serve data to the new profile page. Write it in C# .net and make sure it can be
