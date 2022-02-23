@@ -13,6 +13,8 @@ builder.Services.AddSwaggerGen();
 var connectionString = builder.Configuration.GetConnectionString("IdentityDefaultCnn");
 builder.Services.AddDbContext<DatabaseContext>(x => x.UseSqlServer(connectionString));
 
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
 var app = builder.Build();
 
 

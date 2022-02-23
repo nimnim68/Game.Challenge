@@ -20,9 +20,9 @@ namespace Game.Challenge.API.Controllers
             _mapper = mapper;
         }
 
-        // GET api/<UserController>/7
+        // GET api/<UserController>/2
         [HttpGet("{id}")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(User))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserReadDto))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Get(long id)
@@ -36,12 +36,12 @@ namespace Game.Challenge.API.Controllers
                 user.UserGames = user.UserGames.OrderByDescending(o => o.LastPlayed).ToList();
             }
 
-            return Ok(_mapper.Map<User>(user));
+            return Ok(_mapper.Map<UserReadDto>(user));
         }
 
         // POST api/<UserController>
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(UserCreateDto))]
+        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(UserReadDto))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Post([FromBody] UserCreateDto value)
@@ -50,19 +50,19 @@ namespace Game.Challenge.API.Controllers
 
             await _context.Users.AddAsync(user);
             await _context.SaveChangesAsync();
-            var created = _mapper.Map<User>(user);
+            var created = _mapper.Map<UserReadDto>(user);
             return CreatedAtAction(nameof(Get), new { id = created.UserId }, created);
         }
 
-        // PATCH api/<UserController>/7
+        // PATCH api/<UserController>/2
         [HttpPatch("{id}")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserEditDto))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserReadDto))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Patch(long id, [FromBody] UserEditDto value)
         {
-            User user = await _context.Users.Include(g => g.Address).FirstOrDefaultAsync(g => g.UserId == id);
+            User user = await _context.Users.Include(g => g.Address).FirstAsync(g => g.UserId == id);
             if (user == null)
                 return StatusCode(404);
 
@@ -97,7 +97,7 @@ namespace Game.Challenge.API.Controllers
                 user.Email = value.Email;
 
             await _context.SaveChangesAsync();
-            User updatedUser = _mapper.Map<User>(user);
+            UserReadDto updatedUser = _mapper.Map<UserReadDto>(user);
             return Ok(updatedUser);
         }
 

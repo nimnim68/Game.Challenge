@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Game.Challenge.API.Controllers
 {
-    [Route(Routes.UserRoute)]
+    [Route(Routes.UserRouteManage)]
     [ApiController]
     public class UserManageController : ControllerBase
     {
@@ -24,7 +24,7 @@ namespace Game.Challenge.API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<UserManageReadDto>>> GetAll(UserManageSearchDto input)
         {
-            List<User> users = _context.Users.Where(g => g.Username.Contains(input.Username)).ToList();//?????? convert to async
+            List<User> users = await _context.Users.Where(g => g.Username.Contains(input.Username)).ToListAsync();
             if (!users?.Any() == true)
                 return NotFound("Users not found");
 
@@ -33,7 +33,7 @@ namespace Game.Challenge.API.Controllers
 
         // GET api/<UserManageController>/7
         [HttpGet("{id}")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(User))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserManageReadDto))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Get(long id)
@@ -47,18 +47,18 @@ namespace Game.Challenge.API.Controllers
                 user.UserGames = user.UserGames.OrderByDescending(o => o.LastPlayed).ToList();
             }
 
-            return Ok(_mapper.Map<User>(user));
+            return Ok(_mapper.Map<UserManageReadDto>(user));
         }
 
         // PATCH api/<UserManageController>/7
         [HttpPatch("{id}")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserEditDto))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserManageReadDto))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> Patch(long id, [FromBody] UserEditDto value)
+        public async Task<IActionResult> Patch(long id, [FromBody] UserManageEditDto value)
         {
-            User user = await _context.Users.Include(g => g.Address).FirstOrDefaultAsync(g => g.UserId == id);
+            User user = await _context.Users.Include(g => g.Address).FirstAsync(g => g.UserId == id);
             if (user == null)
                 return StatusCode(404);
 
@@ -86,6 +86,9 @@ namespace Game.Challenge.API.Controllers
             if (!string.IsNullOrEmpty(value.FirstName))
                 user.FirstName = value.FirstName;
 
+            if (!string.IsNullOrEmpty(value.Username))
+                user.Username = value.Username;
+
             if (!string.IsNullOrEmpty(value.LastName))
                 user.LastName = value.LastName;
 
@@ -93,7 +96,7 @@ namespace Game.Challenge.API.Controllers
                 user.Email = value.Email;
 
             await _context.SaveChangesAsync();
-            User updatedUser = _mapper.Map<User>(user);
+            UserManageReadDto updatedUser = _mapper.Map<UserManageReadDto>(user);
             return Ok(updatedUser);
         }
 

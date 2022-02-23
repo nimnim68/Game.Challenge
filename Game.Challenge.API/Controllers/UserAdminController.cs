@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Game.Challenge.API.Controllers
 {
-    [Route(Routes.UserRoute)]
+    [Route(Routes.UserRouteAdmin)]
     [ApiController]
     public class UserAdminController : ControllerBase
     {
@@ -45,13 +45,13 @@ namespace Game.Challenge.API.Controllers
 
         // PATCH api/<UserAdminController>/7
         [HttpPatch("{id}")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserAdminEditDto))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserManageReadDto))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Patch(long id, [FromBody] UserAdminEditDto value)
         {
-            User user = await _context.Users.Include(g => g.UserGames).FirstOrDefaultAsync(g => g.UserId == id);
+            User user = await _context.Users.Include(g => g.UserGames).FirstAsync(g => g.UserId == id);
             if (user == null)
                 return StatusCode(404);
 
@@ -75,7 +75,7 @@ namespace Game.Challenge.API.Controllers
             }
 
             await _context.SaveChangesAsync();
-            User updatedUser = _mapper.Map<User>(user);
+            UserManageReadDto updatedUser = _mapper.Map<UserManageReadDto>(user);
             return Ok(updatedUser);
         }
     }
