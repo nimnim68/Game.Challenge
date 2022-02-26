@@ -13,7 +13,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Game.Challenge.API", "Game.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{5DE6592A-1E2C-4FE9-B66E-C916FDD304BD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Game.Challenge.Tests.Unit", "Game.Challenge.Tests.Unit\Game.Challenge.Tests.Unit.csproj", "{4818921C-A4AF-4382-AA34-396306A6C6AC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Game.Challenge.Tests.Unit", "Game.Challenge.Tests.Unit\Game.Challenge.Tests.Unit.csproj", "{4818921C-A4AF-4382-AA34-396306A6C6AC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8F3EC9C2-C10D-4365-87EF-779B5BB9B87D}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Game.Challenge.Data.Migrations
 {
-    public partial class Enit : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -92,6 +92,36 @@ namespace Game.Challenge.Data.Migrations
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.InsertData(
+                table: "Games",
+                columns: new[] { "GameId", "Name", "ThumbnailImage" },
+                values: new object[] { 1L, "Call of duty", "https://previews.123rf.com/images/aquir/aquir1311/aquir131100316/23569861-.jpg?fj=1" });
+
+            migrationBuilder.InsertData(
+                table: "Games",
+                columns: new[] { "GameId", "Name", "ThumbnailImage" },
+                values: new object[] { 2L, "Need for speed", "https://previews.123rf.com/images/aquir/aquir1311/aquir131100316/23569861-.jpg?fj=1" });
+
+            migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "UserId", "Email", "FirstName", "LastName", "Username" },
+                values: new object[] { 1L, "Test@gmail.com", "FirstName Test 1", "LastName Test 1", "UserNameTest" });
+
+            migrationBuilder.InsertData(
+                table: "Address",
+                columns: new[] { "AddressId", "City", "Country", "Line1", "Line2", "Line3", "UserId", "ZipCode" },
+                values: new object[] { 1L, "Berlin", "Germany", "Line 1 of Address Test", "Line 2 of Address Test", "Line 3 of Address Test", 1L, "10700" });
+
+            migrationBuilder.InsertData(
+                table: "UserGames",
+                columns: new[] { "UserGameId", "GameId", "GameState", "LastPlayed", "RegisterDate", "UserId" },
+                values: new object[] { 1L, 1L, 1, new DateTime(2022, 2, 23, 22, 1, 48, 346, DateTimeKind.Local).AddTicks(9549), new DateTime(2022, 2, 16, 22, 1, 48, 346, DateTimeKind.Local).AddTicks(9622), 1L });
+
+            migrationBuilder.InsertData(
+                table: "UserGames",
+                columns: new[] { "UserGameId", "GameId", "GameState", "LastPlayed", "RegisterDate", "UserId" },
+                values: new object[] { 2L, 2L, 1, new DateTime(2022, 2, 21, 22, 1, 48, 346, DateTimeKind.Local).AddTicks(9655), new DateTime(2022, 2, 13, 22, 1, 48, 346, DateTimeKind.Local).AddTicks(9660), 1L });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Address_UserId",

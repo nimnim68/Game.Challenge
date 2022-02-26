@@ -22,9 +22,9 @@ namespace Game.Challenge.API.Controllers
 
         // GET: api/<UserManageController>
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<UserManageReadDto>>> GetAll(UserManageSearchDto input)
+        public async Task<ActionResult<IEnumerable<UserManageReadDto>>> GetAll([FromQuery] UserManageSearchDto input)
         {
-            List<User> users = await _context.Users.Where(g => g.Username.Contains(input.Username)).ToListAsync();
+            List<User> users = await _context.Users.Include(g => g.Address).Include(g => g.UserGames).ThenInclude(g => g.Game).Where(g => g.Username.Contains(input.Username)).ToListAsync();
             if (!users?.Any() == true)
                 return NotFound("Users not found");
 
@@ -58,7 +58,7 @@ namespace Game.Challenge.API.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Patch(long id, [FromBody] UserManageEditDto value)
         {
-            User user = await _context.Users.Include(g => g.Address).FirstAsync(g => g.UserId == id);
+            User user = await _context.Users.Include(g => g.Address).Include(g => g.UserGames).ThenInclude(g => g.Game).FirstAsync(g => g.UserId == id);
             if (user == null)
                 return StatusCode(404);
 

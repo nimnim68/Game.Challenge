@@ -6,7 +6,7 @@ using Game.Challenge.Domain.Address;
 using Game.Challenge.Domain.Game;
 using Game.Challenge.Domain.User;
 
-namespace Game.Challenge.API
+namespace Game.Challenge.API.Mapping
 {
     public class MappingProfile : Profile
     {
@@ -15,6 +15,7 @@ namespace Game.Challenge.API
             CreateMap<User, UserReadDto>();
             CreateMap<Address, AddressReadDto>();
             CreateMap<UserGame, UserGameReadDto>();
+            CreateMap<Domain.Game.Game, GameReadDto>();
 
             CreateMap<UserCreateDto, User>();
             CreateMap<AddressCreateDto, Address>();
@@ -22,6 +23,7 @@ namespace Game.Challenge.API
             CreateMap<User, UserManageReadDto>();
             CreateMap<Address, AddressManageReadDto>();
             CreateMap<UserGame, UserGameManageReadDto>();
+            CreateMap<Domain.Game.Game, GameManageReadDto>();
 
         }
     }

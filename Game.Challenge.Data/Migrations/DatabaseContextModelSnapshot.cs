@@ -63,6 +63,19 @@ namespace Game.Challenge.Data.Migrations
                         .IsUnique();
 
                     b.ToTable("Address");
+
+                    b.HasData(
+                        new
+                        {
+                            AddressId = 1L,
+                            City = "Berlin",
+                            Country = "Germany",
+                            Line1 = "Line 1 of Address Test",
+                            Line2 = "Line 2 of Address Test",
+                            Line3 = "Line 3 of Address Test",
+                            UserId = 1L,
+                            ZipCode = "10700"
+                        });
                 });
 
             modelBuilder.Entity("Game.Challenge.Domain.Game.Game", b =>
@@ -84,6 +97,20 @@ namespace Game.Challenge.Data.Migrations
                     b.HasKey("GameId");
 
                     b.ToTable("Games");
+
+                    b.HasData(
+                        new
+                        {
+                            GameId = 1L,
+                            Name = "Call of duty",
+                            ThumbnailImage = "https://previews.123rf.com/images/aquir/aquir1311/aquir131100316/23569861-.jpg?fj=1"
+                        },
+                        new
+                        {
+                            GameId = 2L,
+                            Name = "Need for speed",
+                            ThumbnailImage = "https://previews.123rf.com/images/aquir/aquir1311/aquir131100316/23569861-.jpg?fj=1"
+                        });
                 });
 
             modelBuilder.Entity("Game.Challenge.Domain.Game.UserGame", b =>
@@ -116,6 +143,26 @@ namespace Game.Challenge.Data.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("UserGames");
+
+                    b.HasData(
+                        new
+                        {
+                            UserGameId = 1L,
+                            GameId = 1L,
+                            GameState = 1,
+                            LastPlayed = new DateTime(2022, 2, 23, 22, 1, 48, 346, DateTimeKind.Local).AddTicks(9549),
+                            RegisterDate = new DateTime(2022, 2, 16, 22, 1, 48, 346, DateTimeKind.Local).AddTicks(9622),
+                            UserId = 1L
+                        },
+                        new
+                        {
+                            UserGameId = 2L,
+                            GameId = 2L,
+                            GameState = 1,
+                            LastPlayed = new DateTime(2022, 2, 21, 22, 1, 48, 346, DateTimeKind.Local).AddTicks(9655),
+                            RegisterDate = new DateTime(2022, 2, 13, 22, 1, 48, 346, DateTimeKind.Local).AddTicks(9660),
+                            UserId = 1L
+                        });
                 });
 
             modelBuilder.Entity("Game.Challenge.Domain.User.User", b =>
@@ -145,6 +192,16 @@ namespace Game.Challenge.Data.Migrations
                     b.HasKey("UserId");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = 1L,
+                            Email = "Test@gmail.com",
+                            FirstName = "FirstName Test 1",
+                            LastName = "LastName Test 1",
+                            Username = "UserNameTest"
+                        });
                 });
 
             modelBuilder.Entity("Game.Challenge.Domain.Address.Address", b =>

@@ -38,6 +38,61 @@ namespace Game.Challenge.Data
                 .WithMany(b => b.UserGames)
                 .HasForeignKey(p => p.UserId);
 
+            modelBuilder.Entity<Game.Challenge.Domain.Game.Game>().HasData(new Game.Challenge.Domain.Game.Game
+            {
+                GameId = 1,
+                Name = "Call of duty",
+                ThumbnailImage = "https://previews.123rf.com/images/aquir/aquir1311/aquir131100316/23569861-.jpg?fj=1",
+            });
+
+            modelBuilder.Entity<Game.Challenge.Domain.Game.Game>().HasData(new Game.Challenge.Domain.Game.Game
+            {
+                GameId = 2,
+                Name = "Need for speed",
+                ThumbnailImage = "https://previews.123rf.com/images/aquir/aquir1311/aquir131100316/23569861-.jpg?fj=1",
+            });
+
+            modelBuilder.Entity<User>().HasData(new User
+            {
+                UserId = 1,
+                FirstName = "FirstName Test 1",
+                LastName = "LastName Test 1",
+                Username = "UserNameTest",
+                Email = "Test@gmail.com",
+            });
+
+            modelBuilder.Entity<Address>().HasData(new Address
+            {
+                AddressId = 1,
+                UserId = 1,
+                City = "Berlin",
+                Country = "Germany",
+                Line1 = "Line 1 of Address Test",
+                Line2 = "Line 2 of Address Test",
+                Line3 = "Line 3 of Address Test",
+                ZipCode = "10700",
+            });
+
+
+            modelBuilder.Entity<UserGame>().HasData(new UserGame
+            {
+                UserGameId = 1,
+                GameId = 1,
+                UserId = 1,
+                GameState = Domain.Game.GameState.Active,
+                LastPlayed = System.DateTime.Now,
+                RegisterDate = System.DateTime.Now.AddDays(-7),
+            });
+
+            modelBuilder.Entity<UserGame>().HasData(new UserGame
+            {
+                UserGameId = 2,
+                GameId = 2,
+                UserId = 1,
+                GameState = Domain.Game.GameState.Active,
+                LastPlayed = System.DateTime.Now.AddDays(-2),
+                RegisterDate = System.DateTime.Now.AddDays(-10),
+            });
             //base.OnModelCreating(modelBuilder);
         }
 

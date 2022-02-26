@@ -10,6 +10,6 @@ namespace Game.Challenge.API.Dto.Game
         public GameState GameState { get; set; }
 
         public long GameId { get; set; }
-        public GameReadDto Game { get; set; }
+        public GameManageReadDto  Game { get; set; }
     }
 }

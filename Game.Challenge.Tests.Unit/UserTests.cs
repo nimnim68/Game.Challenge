@@ -3,6 +3,7 @@ using Game.Challenge.Domain.User;
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Game.Challenge.Tests.Unit
 {
@@ -67,49 +68,39 @@ namespace Game.Challenge.Tests.Unit
         }
 
         [Test]
-        public async void Should_Update_a_user_without_errors()
+        public async Task Should_Update_a_user_without_errors()
         {
             using (var context = new DatabaseContext(ContextOptions))
             {
-                User userTest = await context.Users.Include(i=>i.Address).FirstAsync(f => f.Username == "UserNameTest");
+                User userTest = await context.Users.Include(i => i.Address).FirstAsync(f => f.Username == "nimnim68");
 
-                if (userTest == null)
-                {
-                    Assert.AreEqual(null, userTest);
-                }
-                else
-                {
-                    userTest.FirstName = "FirstName UpdateTest 2";
-                    userTest.LastName = "LastName UpdateTest 2";
-                    userTest.Username = "UserNameUpdateTest";
-                    userTest.Email = "UpdateTest@gmail.com";
-                    userTest.Address = new Domain.Address.Address()
-                    {
-                        City = "Berlin UpdateTest",
-                        Country = "Germany UpdateTest",
-                        Line1 = "Line 1 of Address UpdateTest",
-                        Line2 = "Line 2 of Address UpdateTest",
-                        Line3 = "Line 3 of Address UpdateTest",
-                        ZipCode = "10900",
-                    };
+                userTest.FirstName = "FirstName UpdateTest 1";
+                userTest.LastName = "LastName UpdateTest 1";
+                userTest.Username = "UserNameUpdateTest";
+                userTest.Email = "UpdateTest@gmail.com";
+                userTest.Address.City = "Berlin UpdateTest";
+                userTest.Address.Country = "Germany UpdateTest";
+                userTest.Address.Line1 = "Line 1 of Address UpdateTest";
+                userTest.Address.Line2 = "Line 2 of Address UpdateTest";
+                userTest.Address.Line3 = "Line 3 of Address UpdateTest";
+                userTest.Address.ZipCode = "10900";
 
-                    Assert.DoesNotThrow(() => context.SaveChanges());
+                Assert.DoesNotThrow(() => context.SaveChanges());
 
-                    userTest = await context.Users.Include(i => i.Address).FirstAsync(f => f.Username == "UserNameUpdateTest");
+                userTest = await context.Users.Include(i => i.Address).FirstAsync(f => f.Username == "UserNameUpdateTest");
 
-                    Assert.AreEqual(userTest.FirstName, "FirstName UpdateTest 1");
-                    Assert.AreEqual(userTest.LastName, "LastName UpdateTest 1");
-                    Assert.AreEqual(userTest.FirstName, "UserNameUpdateTest");
-                    Assert.AreEqual(userTest.FirstName, "UpdateTest@gmail.com");
+                Assert.AreEqual(userTest.FirstName, "FirstName UpdateTest 1");
+                Assert.AreEqual(userTest.LastName, "LastName UpdateTest 1");
+                Assert.AreEqual(userTest.Username, "UserNameUpdateTest");
+                Assert.AreEqual(userTest.Email, "UpdateTest@gmail.com");
 
 
-                    Assert.AreEqual(userTest.Address.City, "Berlin UpdateTest");
-                    Assert.AreEqual(userTest.Address.Country, "Germany UpdateTest");
-                    Assert.AreEqual(userTest.Address.Line1, "Line 1 of Address UpdateTest");
-                    Assert.AreEqual(userTest.Address.Line2, "Line 2 of Address UpdateTest");
-                    Assert.AreEqual(userTest.Address.Line3, "Line 3 of Address UpdateTest");
-                    Assert.AreEqual(userTest.Address.ZipCode, "10900");
-                }
+                Assert.AreEqual(userTest.Address.City, "Berlin UpdateTest");
+                Assert.AreEqual(userTest.Address.Country, "Germany UpdateTest");
+                Assert.AreEqual(userTest.Address.Line1, "Line 1 of Address UpdateTest");
+                Assert.AreEqual(userTest.Address.Line2, "Line 2 of Address UpdateTest");
+                Assert.AreEqual(userTest.Address.Line3, "Line 3 of Address UpdateTest");
+                Assert.AreEqual(userTest.Address.ZipCode, "10900");
 
             }
         }
