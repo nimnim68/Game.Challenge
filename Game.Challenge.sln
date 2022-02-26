@@ -18,6 +18,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8F3EC9C2-C10D-4365-87EF-779B5BB9B87D}"
 	ProjectSection(SolutionItems) = preProject
 		README.md = README.md
+		..\..\..\Downloads\Test-Game ServerEngineer 2021.pdf = ..\..\..\Downloads\Test-Game ServerEngineer 2021.pdf
 	EndProjectSection
 EndProject
 Global
